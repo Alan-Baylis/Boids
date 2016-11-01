@@ -42,13 +42,11 @@ public class GridSystem : IExecuteSystem, IInitializeSystem, ISetPool {
                 }
             }
         }
-        gridEntities = new Entity[numberOfCellsPerDimension][][];
+        
         for (int xIndex = 0; xIndex < numberOfCellsPerDimension; ++xIndex)
         {
-            gridEntities[xIndex] = new Entity[numberOfCellsPerDimension][];
             for (int yIndex = 0; yIndex < numberOfCellsPerDimension; ++yIndex)
             {
-                gridEntities[xIndex][yIndex] = new Entity[numberOfCellsPerDimension];
                 for (int zIndex = 0; zIndex < numberOfCellsPerDimension; ++zIndex)
                 {
                     gridEntities[xIndex][yIndex][zIndex].gridCell.NeighboringCells = GetNeighboringCells(xIndex, yIndex, zIndex);
@@ -64,10 +62,11 @@ public class GridSystem : IExecuteSystem, IInitializeSystem, ISetPool {
         for (int posIndex = 0; posIndex < posEntities.Length; ++posIndex)
         {
             Vector3 position = posEntities[posIndex].position.Position;
-            int[] coordinates = GetCoordinates(position);
-            int xIndex = coordinates[0];
-            int yIndex = coordinates[1];
-            int zIndex = coordinates[2];
+            
+            int xIndex;
+            int yIndex;
+            int zIndex;
+            GetCoordinates(position, out xIndex, out yIndex, out zIndex);
 
             if( xIndex < 0 || xIndex >= numberOfCellsPerDimension ||
                 yIndex < 0 || yIndex >= numberOfCellsPerDimension ||
@@ -138,13 +137,11 @@ public class GridSystem : IExecuteSystem, IInitializeSystem, ISetPool {
         return neighborEntities;
     }
 
-    public int[] GetCoordinates(Vector3 position)
+    public void GetCoordinates(Vector3 position, out int xIndex, out int yIndex, out int zIndex)
     {
-        return new int[] {
-            Mathf.FloorToInt((gridRange + position.x) / cellLength),
-            Mathf.FloorToInt((gridRange + position.y) / cellLength),
-            Mathf.FloorToInt((gridRange + position.z) / cellLength)
-        };
+        xIndex = Mathf.FloorToInt((gridRange + position.x) / cellLength);
+        yIndex = Mathf.FloorToInt((gridRange + position.y) / cellLength);
+        zIndex = Mathf.FloorToInt((gridRange + position.z) / cellLength);
     }
 
     public Entity[][][] GridEntities { get { return gridEntities; } }

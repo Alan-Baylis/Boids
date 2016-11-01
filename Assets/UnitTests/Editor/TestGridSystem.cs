@@ -41,10 +41,14 @@ public class TestGridSystem
         Vector3 test4Position = new Vector3(0, 0, 0);
 
         //Act
-        int[] test1coordinates = gridSystem.GetCoordinates(test1Position);
-        int[] test2coordinates = gridSystem.GetCoordinates(test2Position);
-        int[] test3coordinates = gridSystem.GetCoordinates(test3Position);
-        int[] test4coordinates = gridSystem.GetCoordinates(test4Position);
+        int[] test1coordinates = new int[3];
+        gridSystem.GetCoordinates(test1Position, out test1coordinates[0], out test1coordinates[1], out test1coordinates[2]);
+        int[] test2coordinates = new int[3];
+        gridSystem.GetCoordinates(test2Position, out test2coordinates[0], out test2coordinates[1], out test2coordinates[2]);
+        int[] test3coordinates = new int[3];
+        gridSystem.GetCoordinates(test3Position, out test3coordinates[0], out test3coordinates[1], out test3coordinates[2]);
+        int[] test4coordinates = new int[3];
+        gridSystem.GetCoordinates(test4Position, out test4coordinates[0], out test4coordinates[1], out test4coordinates[2]);
 
         //Assert
         // as range is in every direction, there should be 20 cells per dimension!

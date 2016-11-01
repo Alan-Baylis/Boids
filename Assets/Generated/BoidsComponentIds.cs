@@ -12,15 +12,17 @@ public static class BoidsComponentIds {
     public const int ContainedInCell = 1;
     public const int GridCell = 2;
     public const int Position = 3;
-    public const int Velocity = 4;
+    public const int Tick = 4;
+    public const int Velocity = 5;
 
-    public const int TotalComponents = 5;
+    public const int TotalComponents = 6;
 
     public static readonly string[] componentNames = {
         "Boid",
         "ContainedInCell",
         "GridCell",
         "Position",
+        "Tick",
         "Velocity"
     };
 
@@ -29,6 +31,7 @@ public static class BoidsComponentIds {
         typeof(ContainedInCellComponent),
         typeof(GridCellComponent),
         typeof(PositionComponent),
+        typeof(TickComponent),
         typeof(VelocityComponent)
     };
 }

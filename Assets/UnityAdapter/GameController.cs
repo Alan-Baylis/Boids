@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
         systems.TearDown();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         systems.Execute();
         systems.Cleanup();
@@ -28,6 +28,16 @@ public class GameController : MonoBehaviour
     private Systems CreateSystems(Pools pools)
     {
         return new Feature("Systems").
-            Add(pools.boids.CreateSystem(new FlockingSystem()));
+            Add(pools.boids.CreateSystem(new CreateBoidsSystem() {
+                NumberOfBoids = 200})).
+            Add(pools.boids.CreateSystem(new GridSystem())).
+
+            Add(pools.boids.CreateSystem(new FlockingSystem() { 
+                PreserveExistingDirectionWeight = 1,
+                MaxDistToCenterWeight = 5,
+                AlignWithNeighborsWeight = 5,
+                Deltatime = Time.fixedDeltaTime})).
+
+            Add(pools.boids.CreateSystem(new DebugGizmoBoidViewSystem()));
     }
 }
